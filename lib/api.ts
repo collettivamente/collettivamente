@@ -1,6 +1,6 @@
 import { GraphQLClient, gql } from 'graphql-request'
 import { RequestDocument } from 'graphql-request/dist/types'
-import { Articolo, Category, Editoriale, Post, SiteLink } from 'pages/models'
+import { Articolo, Category, Editoriale, Post, SiteLink } from 'models'
 
 const client = new GraphQLClient(
   'https://api-eu-central-1.graphcms.com/v2/cku6pd4q82e8z01zea81d82ex/master'
@@ -105,7 +105,9 @@ export async function getMenu() {
   const resp = await fetchAPI<Response, undefined>(gql`
     query SiteMenu {
       menus(first: 1) {
-        categorie {
+        categorie(where: {
+          nome_not: "Editoriali"
+        }) {
           nome
           slug
         }

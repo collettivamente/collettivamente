@@ -8,11 +8,11 @@ import Header from '@/components/header'
 import Container from '@/components/container'
 import { format } from 'date-fns'
 import { it } from 'date-fns/locale'
-import { Articolo, Editoriale, Post } from 'pages/models'
+import { Articolo, Editoriale, Post } from 'models'
 import { RichText } from '@graphcms/rich-text-react-renderer'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { GraphCMSImageLoader } from 'pages/helpers/utils'
+import { GraphCMSImageLoader } from 'helpers/utils'
 
 
 interface Data {

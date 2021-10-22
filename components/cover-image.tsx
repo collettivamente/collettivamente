@@ -2,7 +2,7 @@ import React from 'react'
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
-import { GraphCMSImageLoader } from 'pages/helpers/utils'
+import { GraphCMSImageLoader } from '@/helpers/utils'
 
 interface Data {
   title: string,

@@ -11,10 +11,9 @@ import Carousel from '@/components/carousel'
 import Logo from '../../public/images/logo.svg'
 import { format } from 'date-fns'
 import { it } from 'date-fns/locale'
-import { Articolo, Category, Editoriale, Post } from 'pages/models'
-import { GraphCMSImageLoader } from 'pages/helpers/utils'
+import { Articolo, Category, Editoriale, Post } from 'models'
+import { GraphCMSImageLoader } from '@/helpers/utils'
 import styled from 'styled-components'
-import { RichText } from '@graphcms/rich-text-react-renderer'
 import { FaChevronRight } from 'react-icons/fa'
 
 type PageData = {
@@ -40,6 +39,9 @@ const getImage = (post: Pick<Articolo, 'immagine'>, alt: string) => {
 }
 
 const HomePost: NextPage<Data> = ({ preview, data }) => {
+  if (!data) {
+    return <div>Loading....</div>
+  }
   const baseUrl = (data.categoria.treename ?? data.categoria.slug).replace(';', '/').toLowerCase()
   const date = format(new Date(), 'dd MMMM yyyy', { locale: it })
 

@@ -1,8 +1,8 @@
 import { getLinks } from "@/lib/api"
-import { SiteLink } from "pages/models"
+import { SiteLink } from "models"
 import React, { useState, useEffect } from "react"
 import Image from 'next/image'
-import { GraphCMSImageLoader } from "pages/helpers/utils"
+import { GraphCMSImageLoader } from "helpers/utils"
 
 export default function Links() {
   const [links, setLinks] = useState<SiteLink[]>([]);

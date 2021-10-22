@@ -5,7 +5,7 @@ import { NextRouter, useRouter } from "next/router";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import Logo from "../public/images/logo.svg";
 import styles from "./header.module.css";
-import { Category } from "pages/models"
+import { Category } from "models"
 import { getMenu } from "@/lib/api"
 
 const fnIsCurrentPath = (router: NextRouter) => (path: string) => router.asPath === path;
@@ -48,6 +48,7 @@ export default function Header() {
   useEffect(() => {
     (async () => {
       const menu = await getMenu();
+      menu.unshift({ nome: 'Editoriali', slug: 'editoriali' })
       setLinks(menu);
     })();
   }, [])

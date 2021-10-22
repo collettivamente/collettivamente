@@ -17,7 +17,9 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/lib/*": ["lib/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/models/*": ["models/*"],
+      "@/helpers/*": ["helpers/*"]
     },
     "plugins": [
       {"name": "typescript-plugin-css-modules"}
