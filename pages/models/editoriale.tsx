@@ -8,7 +8,7 @@ export interface Editoriale {
   slug: string;
   data: string;
   contenuto: Body;
-  immagine: ImageData;
+  immagine?: ImageData;
   autori: Autore[];
   categorie: Category[];
 }

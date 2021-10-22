@@ -14,6 +14,7 @@ import { it } from 'date-fns/locale'
 import { Articolo, Category, Editoriale, Post } from 'pages/models'
 import { GraphCMSImageLoader } from 'pages/helpers/utils'
 import styled from 'styled-components'
+import { RichText } from '@graphcms/rich-text-react-renderer'
 import { FaChevronRight } from 'react-icons/fa'
 
 type PageData = {
@@ -38,7 +39,7 @@ const getImage = (post: Pick<Articolo, 'immagine'>, alt: string) => {
   </div>)
 }
 
-const HomeEditoriali: NextPage<Data> = ({ preview, data }) => {
+const HomePost: NextPage<Data> = ({ preview, data }) => {
   const baseUrl = (data.categoria.treename ?? data.categoria.slug).replace(';', '/').toLowerCase()
   const date = format(new Date(), 'dd MMMM yyyy', { locale: it })
 
@@ -101,16 +102,26 @@ const HomeEditoriali: NextPage<Data> = ({ preview, data }) => {
   )
 }
 
-const getStaticProps: GetStaticProps = async ({ preview = null }) => {
-  const data = await getArticoliByCategory("editoriali", 0);
+const getStaticProps: GetStaticProps = async ({ params, preview = null }) => {
+  const category = params!.category as string;
+  const data = await getArticoliByCategory(category, 0);
   return {
     props: { preview, data }
   }
 }
 
-export { getStaticProps }
+const getStaticPaths: GetStaticPaths = async () => {
+  const data = await getMenu()
+  const paths = data.map(cat => ({
+    params: { category: cat.slug }
+  }))
 
-export default HomeEditoriali
+  return { paths, fallback: true }
+}
+
+export { getStaticProps, getStaticPaths }
+
+export default HomePost
 
 const ColoredSpan = styled.span`
   color: ${props => props.color}

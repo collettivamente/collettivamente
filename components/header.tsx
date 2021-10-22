@@ -6,19 +6,21 @@ import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import Logo from "../public/images/logo.svg";
 import styles from "./header.module.css";
 import { Category } from "pages/models"
-import { getCategories } from "@/lib/api"
+import { getMenu } from "@/lib/api"
 
-const fnIsCurrentPath = (router: NextRouter) => (path: string) => router.pathname === path;
+const fnIsCurrentPath = (router: NextRouter) => (path: string) => router.asPath === path;
 
 type LinkCategories = Pick<Category, 'nome' | 'slug'>;
 
 const getLinks = (router: NextRouter, menu: LinkCategories[]) => {
 
   const isCurrentPath = fnIsCurrentPath(router);
+  
   return (
     <>
       {menu.map(item => {
         const path = `/${item.slug}`
+
         return (
           <Link key={item.slug} href={path} passHref={true}>
             <a
@@ -45,7 +47,7 @@ export default function Header() {
 
   useEffect(() => {
     (async () => {
-      const menu = await getCategories();
+      const menu = await getMenu();
       setLinks(menu);
     })();
   }, [])

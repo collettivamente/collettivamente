@@ -1,44 +1,22 @@
 import React from 'react'
 import Link from 'next/link'
-import CoverImage from './cover-image'
 import { useEmblaCarousel } from 'embla-carousel/react'
 import styles from './Carousel.module.css'
-import Logo from '../public/images/logo.svg'
+import Image from 'next/image'
 import { useCallback } from 'react'
 import classNames from 'classnames'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { ImageData, Post } from 'pages/models'
+import { Editoriale, ImageData, Post } from 'pages/models'
+import { GraphCMSImageLoader } from 'pages/helpers/utils'
+import format from 'date-fns/format'
+import { it } from 'date-fns/locale'
+import { RichText } from '@graphcms/rich-text-react-renderer'
 
-type Slide = Pick<Post, 'titolo' | 'slug' | 'excerpt' | 'cover' | 'categorie'>;
+type Slide = Pick<Editoriale, 'titolo' | 'slug' | 'contenuto' | 'immagine' | 'data' | 'categorie'>;
 
 interface Props {
   slides: Slide[]
-}
-
-const getImage = (slide: Slide) => {
-  let img = slide.cover
-  if (img) {
-    return (
-      <CoverImage title={slide.titolo} url={img.url} slug={slide.slug} />
-    )
-  }
-
-  if (slide.categorie.length) {
-    const mainCat = slide.categorie[0];
-    img = mainCat.image;
-    if (img) {
-      return (
-        <CoverImage title={slide.titolo} url={img.url} slug={slide.slug} />
-      )
-    }
-  }
-
-  return (
-    <div className="relative w-full h-full bg-gray-800">
-      <Logo className="absolute top-0 left-0 w-4/12 h-auto" />
-    </div>
-  )
 }
 
 const Carousel: React.FC<Props> = ({ slides }) => {
@@ -71,15 +49,25 @@ const Carousel: React.FC<Props> = ({ slides }) => {
       <div className={styles.embla__viewport} ref={viewportRef}>
         <div className={styles.embla__container}>
           {slides.map((slide, idx) => (
-            <Link href={`/posts/${slide.slug}`} key={slide.slug} passHref={true}>
-              <a className={`${styles.embla__slide} w-full h-80`} title="Vai al post">
-                {getImage(slide)}
-                <div className="absolute bottom-0 left-0 w-full p-4 text-white bg-gray-800 bg-opacity-75">
-                  <h3 className="text-3xl font-bold">{slide.titolo}</h3>
-                  <span className="text-sm font-medium">{slide.excerpt}</span>
+            <div className={`${styles.embla__slide} w-full h-80 flex`} key={slide.slug}>
+              <div className="relative w-full h-full md:w-5/12 md:px-4">
+                <Image loader={GraphCMSImageLoader} src={slide.immagine?.url ?? slide.categorie[0].image.url} layout="fill" alt={`Immagine - ${slide.titolo}`} />
+              </div>
+              <div className="w-full md:w-7/12 md:px-4">
+                <Link href={`/editoriali`} passHref={true}>
+                  <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">editoriali</a>
+                </Link>
+                <h2 className="block font-serif text-6xl font-normal text-white">
+                  <Link href={`/editoriali/${slide.slug}`} passHref={true}>
+                    <a>{slide.titolo}</a>
+                  </Link>
+                </h2>
+                <p className="mb-4 italic text-white">{format(new Date(slide.data), 'dd MMMM yyyy', {locale: it})}</p>
+                <div className="text-base leading-relaxed text-gray-400 line-clamp-6">
+                  <RichText content={slide.contenuto.raw} />
                 </div>
-              </a>
-            </Link>
+              </div>
+            </div>
           ))}
         </div>
       </div>

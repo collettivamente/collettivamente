@@ -6,4 +6,5 @@ export interface Category {
   nome: string;
   colore: Color;
   image: ImageData;
+  treename: string;
 }

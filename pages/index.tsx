@@ -32,7 +32,7 @@ interface Data {
   data: HomeData;
 }
 
-const getImage = (article: Pick<Articolo, 'immagine' | 'categorie'>, alt: string, width: number, height: number) => {
+const getImage = (article: Pick<Articolo | Editoriale, 'immagine' | 'categorie'>, alt: string, width: number, height: number) => {
   let img = article.immagine;
   if (img) {
     return (
@@ -190,10 +190,12 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
               </div>
               <div className="items-center justify-between mt-8 continue-reading sm:flex">
                 <div className="continue-btn">
-                  <button className="inline-block px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
-                    Continua a leggere
-                    <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
-                  </button>
+                  <Link href={`/editoriali/${fondo.slug}`} passHref={true}>
+                    <a className="flex items-center px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
+                      Continua a leggere
+                      <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
+                    </a>
+                  </Link>
                 </div>
                 <Share />
               </div>
