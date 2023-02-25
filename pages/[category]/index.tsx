@@ -57,7 +57,7 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
             <div className="flex flex-wrap max-w-6xl mx-auto">
               <div className="flex items-center justify-between w-full breadcumb-content">
                 <Link href={`/${baseUrl}`} passHref={true}>
-                  <a className="inline-block px-2 py-3 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600 hover:transition-all hover:outline-none hover:no-underline">{data.categoria.nome}</a>
+                  <a className="inline-block px-2 py-3 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600 hover:transition-all hover:outline-none hover:no-underline">{data.categoria?.nome}</a>
                 </Link>
                 <p className="mb-0 italic text-gray-800">{date}</p>
               </div>
@@ -71,17 +71,17 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
           <section className="py-24 area-articoli">
             <div className="max-w-6xl mx-auto">
               <div className="grid grid-flow-row grid-cols-1 gap-2 mt-3 sm:grid-cols-2 md:grid-cols-3">
-                {data.categoria.articoli.map(art => {
+                {data.categoria?.articoli.map(art => {
                   const dt = format(new Date(art.data), 'dd MMMM yyyy', { locale: it })
                   return (
                     <div key={art.slug} className="pb-10 mb-24 border-b border-gray-400 border-solid">
                       <Link href={`/${baseUrl}/${art.slug}`}>
-                        <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">{data.categoria.nome}</a>
+                        <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">{data.categoria?.nome}</a>
                       </Link>
                       <h2 className="mb-4 font-serif text-3xl">{art.titolo}</h2>
                       <p className="block text-lg italic font-light leading-relaxed text-gray-600">{dt}</p>
                       <div className="relative object-contain py-7 h-52">
-                        {getImage(art.immagine ? art : { immagine: data.categoria.image }, `Image - ${art.titolo}`)}
+                        {(art.immagine || data.categoria?.image) ? getImage(art.immagine ? art : { immagine: data.categoria!.image }, `Image - ${art.titolo}`) : undefined}
                       </div>
                       <p className="text-lg font-light leading-relaxed text-gray-700 line-clamp-4">{art.sommario}</p>
                       <div className="flex mt-8 actions">
