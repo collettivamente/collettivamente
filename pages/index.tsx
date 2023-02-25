@@ -17,6 +17,9 @@ import { GraphCMSImageLoader } from '../helpers/utils'
 import styled from 'styled-components'
 import { RichText } from '@graphcms/rich-text-react-renderer'
 import { FaChevronRight, FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa'
+import { FacebookShareButton, PinterestShareButton, LinkedinShareButton, TwitterShareButton, PinterestIcon, LinkedinIcon, FacebookIcon, TwitterIcon } from 'react-share'
+import { NextSeo } from "next-seo"
+import { useRouter } from 'next/router'
 
 interface HomeData {
   fondo: Editoriale;
@@ -83,21 +86,23 @@ function Welcome({ apertura }: WelcomeProps) {
   )
 }
 
-function Share() {
+function Share({ shareUrl }: { shareUrl: string }) {
+  const url = typeof window !== 'undefined' ? new URL(shareUrl, window.location.href).toString() : shareUrl;
+  
   return (
-    <div className="share">
-      <a href="#" className="inline-block px-6 text-xl text-gray-300">
-        <FaPinterest />
-      </a>
-      <a href="#" className="inline-block px-6 text-xl text-gray-300">
-        <FaLinkedin />
-      </a>
-      <a href="#" className="inline-block px-6 text-xl text-gray-300">
-        <FaFacebook />
-      </a>
-      <a href="#" className="inline-block px-6 text-xl text-gray-300">
-        <FaTwitter />
-      </a>
+    <div className="text-gray-300 share">
+      <PinterestShareButton media="" url={url}>
+        <PinterestIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
+      </PinterestShareButton>
+      <LinkedinShareButton url={url}>
+        <LinkedinIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
+      </LinkedinShareButton>
+      <FacebookShareButton url={url}>
+        <FacebookIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
+      </FacebookShareButton>
+      <TwitterShareButton url={url}>
+        <TwitterIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
+      </TwitterShareButton>
     </div>
   )
 }
@@ -197,7 +202,7 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
                     </a>
                   </Link>
                 </div>
-                <Share />
+                <Share shareUrl={`/editoriali/${fondo.slug}`} />
               </div>
             </div>
             {seconda_apertura && (
@@ -219,12 +224,14 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
                 </div>
                 <div className="items-center justify-between mt-8 continue-reading sm:flex">
                   <div className="continue-btn">
-                    <button className="inline-block px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
-                      Continua a leggere
-                      <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
-                    </button>
+                    <Link href={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`} passHref>
+                      <a className="flex items-center px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
+                        Continua a leggere
+                        <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
+                      </a>
+                    </Link>
                   </div>
-                  <Share />
+                  <Share shareUrl={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`} />
                 </div>
               </div>
             )}
@@ -248,12 +255,33 @@ const Home: NextPage<Data> = ({ preview, data }) => {
     setDate(date);
   }, [])
 
+  const url = typeof window !== 'undefined' ? new URL('/', window.location.origin).toString() : '/'
+  const imageUrl = typeof window !== 'undefined' ? new URL('/images/collettivamente.jpg', window.location.origin).toString() : '/collettivamente.jpg';
+
   return (
     <>
       <Layout preview={false}>
         <Head>
           <title>Collettivamente</title>
         </Head>
+        <NextSeo
+          title="Collettivamente"
+          description="Blog Collettivamente. Uno scambio di opinioni"
+          openGraph={{
+            url,
+            title: "Collettivamente",
+            description: "Blog Collettivamente. Uno scambio di opinioni",
+            images: [
+              {
+                url: imageUrl,
+                width: 400,
+                height: 98,
+                alt: "Collettivamente",
+                type: "image/jpeg"
+              }
+            ]
+          }}
+        />
         <Header />
         <Container>
           <Welcome apertura={data.apertura} />

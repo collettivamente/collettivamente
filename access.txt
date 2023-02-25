@@ -10,6 +10,17 @@ luigi_bruni@hotmail.it
 19.Settembre
 
 
+url
+https://collettivamente.vercel.app/
+
 template: https://technext.github.io/gazette/
 
+mail per il blog:
+
+collettivamente.blog@gmail.com
+password: aGZqNKYhVuhgU35
+
+github
+username: collettivamente
+password: gvvtbsfkc7g46wj
 

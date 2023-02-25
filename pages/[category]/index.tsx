@@ -18,7 +18,7 @@ import { FaChevronRight } from 'react-icons/fa'
 
 type PageData = {
   editoriali: Array<Pick<Editoriale, 'titolo' | 'slug' | 'data' | 'contenuto' | 'immagine' | 'categorie'>>,
-  categoria: Pick<Category, 'nome' | 'slug' | 'treename' | 'image'> & { articoli: Pick<Articolo, 'titolo' | 'data' | 'sommario' | 'slug' | 'immagine' | 'autori'>[] }
+  categoria?: Pick<Category, 'nome' | 'slug' | 'treename' | 'image'> & { articoli: Pick<Articolo, 'titolo' | 'data' | 'sommario' | 'slug' | 'immagine' | 'autori'>[] }
 }
 
 interface Data {
@@ -42,7 +42,7 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
   if (!data) {
     return <div>Loading....</div>
   }
-  const baseUrl = (data.categoria.treename ?? data.categoria.slug).replace(';', '/').toLowerCase()
+  const baseUrl = (data.categoria?.treename ?? data.categoria?.slug ?? '').replace(';', '/').toLowerCase()
   const date = format(new Date(), 'dd MMMM yyyy', { locale: it })
 
   return (

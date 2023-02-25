@@ -185,7 +185,7 @@ export async function getArticoliByCategory(category: string, start: number = 0)
     where
   })
   
-  const categoria = resp.categorie[0]
+  const categoria = resp.categorie?.[0]
   return { editoriali: resp.editoriali, categoria }
 }
 

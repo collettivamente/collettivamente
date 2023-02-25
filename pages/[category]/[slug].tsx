@@ -13,6 +13,7 @@ import { RichText } from '@graphcms/rich-text-react-renderer'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { GraphCMSImageLoader } from '@/helpers/utils'
+import { NextSeo } from 'next-seo'
 
 
 interface Data {
@@ -22,6 +23,7 @@ interface Data {
 
 const PostPage: NextPage<Data> = ({ preview, articolo }) => {
   const dt = format(articolo ? new Date(articolo.data) : new Date(), 'dd MMMM yyyy', { locale: it })
+  const url = typeof window !== 'undefined' ? window.location.href : articolo ? `/${articolo.categorie[0].slug}/${articolo.slug}` : ''
 
   return (
     <>
@@ -30,6 +32,24 @@ const PostPage: NextPage<Data> = ({ preview, articolo }) => {
           <title>Collettivamente</title>
         </Head>
         <Header />
+        {articolo && <NextSeo
+          title={articolo.titolo}
+          description={articolo.sommario}
+          openGraph={{
+            url,
+            title: articolo.titolo,
+            description: articolo.sommario,
+            images: [
+              {
+                url: articolo.immagine.url,
+                width: 1600,
+                height: 900,
+                alt: articolo.titolo,
+                type: "image/jpeg"
+              }
+            ]
+          }}
+        />}
         <Container>
           <section className="block -mx-5 single-article">
             {articolo && (
@@ -46,6 +66,9 @@ const PostPage: NextPage<Data> = ({ preview, articolo }) => {
                       <p className="mb-4 text-base italic font-normal leading-loose text-white">{dt}</p>
                     </div>
                   </div>
+                </div>
+                <div className="container max-w-6xl mx-auto italic">
+                  di {articolo.autori.map(aut => aut.nome).join(', ')}
                 </div>
                 <div className="article-content">
                   <div className="container max-w-6xl mx-auto">

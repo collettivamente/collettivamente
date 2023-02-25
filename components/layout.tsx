@@ -1,8 +1,9 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import Footer from "./footer";
 import Meta from "./meta";
 
-const Layout: React.FC<{ preview: boolean }> = ({ preview, children }) => (
+type Props = { preview: boolean }
+const Layout: FunctionComponent<Props> = ({ preview, children }) => (
   <>
     <Meta />
     <div className="min-h-screen">
