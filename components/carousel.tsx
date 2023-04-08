@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { useEmblaCarousel } from 'embla-carousel/react'
+import useEmblaCarousel from 'embla-carousel-react'
 import styles from './Carousel.module.css'
 import Image from 'next/image'
 import { useCallback } from 'react'
