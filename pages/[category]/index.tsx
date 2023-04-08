@@ -56,9 +56,7 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
           <div className="py-12 -mx-5 bg-gray-300 breadcumb_area z-1">
             <div className="flex flex-wrap max-w-6xl mx-auto">
               <div className="flex items-center justify-between w-full breadcumb-content">
-                <Link href={`/${baseUrl}`} passHref={true}>
-                  <a className="inline-block px-2 py-3 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600 hover:transition-all hover:outline-none hover:no-underline">{data.categoria?.nome}</a>
-                </Link>
+                <Link href={`/${baseUrl}`} passHref={true} className="inline-block px-2 py-3 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600 hover:transition-all hover:outline-none hover:no-underline">{data.categoria?.nome}</Link>
                 <p className="mb-0 italic text-gray-800">{date}</p>
               </div>
             </div>
@@ -75,9 +73,7 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
                   const dt = format(new Date(art.data), 'dd MMMM yyyy', { locale: it })
                   return (
                     <div key={art.slug} className="pb-10 mb-24 border-b border-gray-400 border-solid">
-                      <Link href={`/${baseUrl}/${art.slug}`}>
-                        <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">{data.categoria?.nome}</a>
-                      </Link>
+                      <Link href={`/${baseUrl}/${art.slug}`} className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">{data.categoria?.nome}</Link>
                       <h2 className="mb-4 font-serif text-3xl">{art.titolo}</h2>
                       <p className="block text-lg italic font-light leading-relaxed text-gray-600">{dt}</p>
                       <div className="relative object-contain py-7 h-52">
@@ -85,11 +81,9 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
                       </div>
                       <p className="text-lg font-light leading-relaxed text-gray-700 line-clamp-4">{art.sommario}</p>
                       <div className="flex mt-8 actions">
-                        <Link href={`/${baseUrl}/${art.slug}`}>
-                          <a className="flex items-center px-5 leading-10 text-gray-900 uppercase border border-gray-900 border-solid h-14">
-                            Continua a leggere
-                            <FaChevronRight className="w-4 h-4 ml-4" />
-                          </a>
+                        <Link href={`/${baseUrl}/${art.slug}`} className="flex items-center px-5 leading-10 text-gray-900 uppercase border border-gray-900 border-solid h-14">
+                          Continua a leggere
+                          <FaChevronRight className="w-4 h-4 ml-4" />
                         </Link>
                       </div>
                     </div>

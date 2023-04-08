@@ -54,12 +54,12 @@ const Carousel: React.FC<Props> = ({ slides }) => {
                 <Image loader={GraphCMSImageLoader} src={slide.immagine?.url ?? slide.categorie[0].image.url} layout="fill" alt={`Immagine - ${slide.titolo}`} />
               </div>
               <div className="w-full md:w-7/12 md:px-4">
-                <Link href={`/editoriali`} passHref={true}>
-                  <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">editoriali</a>
+                <Link href={`/editoriali`} passHref={true} className='inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600'>
+                  editoriali
                 </Link>
                 <h2 className="block font-serif text-6xl font-normal text-white">
                   <Link href={`/editoriali/${slide.slug}`} passHref={true}>
-                    <a>{slide.titolo}</a>
+                    {slide.titolo}
                   </Link>
                 </h2>
                 <p className="mb-4 italic text-white">{format(new Date(slide.data), 'dd MMMM yyyy', {locale: it})}</p>

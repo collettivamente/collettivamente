@@ -1,15 +1,14 @@
-import { GraphQLClient, gql } from 'graphql-request'
-import { RequestDocument } from 'graphql-request/dist/types'
+import { GraphQLClient, gql, RequestDocument, Variables } from 'graphql-request'
 import { Articolo, Category, Editoriale, Post, SiteLink } from 'models'
 
 const client = new GraphQLClient(
   'https://api-eu-central-1.graphcms.com/v2/cku6pd4q82e8z01zea81d82ex/master'
 )
 
-async function  fetchAPI<T, TVars>(query: RequestDocument, variables?: TVars) {
-  const res = await client.request<T, TVars>(
+async function  fetchAPI<T, TVars extends Variables | undefined>(query: RequestDocument, variables?: TVars) {
+  const res = await client.request<T>(
     query,
-    variables,
+    variables
   )
   return res;
 }

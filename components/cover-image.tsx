@@ -28,7 +28,7 @@ const CoverImage: React.FC<Data> = ({ title, url, slug }) => {
   return (
     <div className="sm:mx-0">
       <Link href={`/posts/${slug}`}>
-        {slug ? <a aria-label={title}>{image}</a> : image}
+        {image}
       </Link>
     </div>
   )

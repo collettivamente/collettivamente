@@ -27,15 +27,10 @@ const getLinks = (router: NextRouter, menu: LinkCategories[]) => {
         const path = `/${item.slug}`
 
         return (
-          <Link key={item.slug} href={path} passHref={true}>
-            <a
-              className={`px-3 py-2 rounded-md font-medium uppercase text-black text-opacity-75 ${
-                isCurrentPath(path) ? styles["md-underline"] : ""
-              }`}
-              aria-current="page"
-            >
+          <Link key={item.slug} href={path} passHref={true} className={`px-3 py-2 rounded-md font-medium uppercase text-black text-opacity-75 ${
+            isCurrentPath(path) ? styles["md-underline"] : ""
+            }`} aria-current="page">
               {item.nome}
-            </a>
           </Link>
         )
       })}
@@ -59,15 +54,11 @@ function UserPopover({ user }: { user: AppUser}) {
         {...attributes.popper}
       >
         <div className="flex flex-col">
-          <Link href="/auth/profile">
-            <a className="flex items-center">
-              <FaUser className="mr-2" />Profilo
-            </a>
+          <Link href="/auth/profile" className="flex items-center">
+            <FaUser className="mr-2" />Profilo
           </Link>
-          <Link href="/api/auth/logout">
-            <a className="flex items-center">
-              <FaUserSlash className="mr-2"/>Logout
-            </a>
+          <Link href="/api/auth/logout" className="flex items-center">
+            <FaUserSlash className="mr-2"/>Logout
           </Link>
         </div>
       </Popover.Panel>
@@ -98,10 +89,8 @@ export default function Header() {
           <div className="flex flex-wrap items-center h-full -mx-4">
             <div className="w-full h-full md:w-1/2">
               <div className="h-full logo-area">
-                <Link href="/">
-                  <a className="flex items-center h-full">
-                    <Logo className="w-auto h-4/5" />
-                  </a>
+                <Link href="/" className="flex items-center h-full">
+                  <Image priority src={Logo} className="w-auto h-4/5" alt="Logo" />
                 </Link>
               </div>
             </div>
@@ -144,9 +133,7 @@ export default function Header() {
                 {user?.picture
                   ? <UserPopover user={user} />
                   : (<Link href="/api/auth/login" passHref>
-                      <a>
-                        <FaUserCircle className="w-8 h-8 text-gray-700"/>
-                      </a>
+                      <FaUserCircle className="w-8 h-8 text-gray-700"/>
                     </Link>)
                 }
               </div>

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import type { NextPage, GetStaticProps } from 'next'
 import Head from "next/head"
-import Image from "next/image"
+import Image from "next/legacy/image"
 import Link from 'next/link'
 import Container from "@/components/container"
 import Layout from "@/components/layout"
@@ -73,10 +73,8 @@ function Welcome({ apertura }: WelcomeProps) {
             {apertura.categorie[0].nome}
           </div>
           <h3>
-            <Link href={url} passHref={true}>
-              <a className="mb-4 text-3xl text-white hover:text-red-500" style={{fontFamily: 'PT Serif, serif'}}>
-                {apertura.titolo}
-              </a>
+            <Link href={url} passHref={true} className="mb-4 text-3xl text-white hover:text-red-500" style={{fontFamily: 'PT Serif, serif'}}>
+              {apertura.titolo}
             </Link>
           </h3>
           <div className="inline-block text-sm italic text-white date hover:text-red-500">{data}</div>
@@ -118,16 +116,14 @@ function Contornati({contornati}: ContornatiProps) {
         {contornati.map(civ => {
           const url = `/${civ.categorie[0].slug}/${civ.slug}`
           return (
-            <Link href={url} key={civ.slug} passHref={true}>
-              <a className="relative block h-64 mb-8 articoli z-1">
-                {getImage(civ, `Immagine - ${civ.slug}`, 400, 400)}
-                <div className="absolute top-0 left-0 z-10 w-full h-8 bg-black/50">
-                  <p className="absolute top-0 left-0 w-1/2 h-8 mb-0 text-xs leading-8 text-center text-white uppercase bg-red-600">{civ.categorie[0].nome}</p>
-                </div>
-                <div className="absolute bottom-0 left-0 flex items-end h-24 p-5 bg-center bg-cover heading z-1 before:absolute before:w-full before:h-full before:-z-1 before:top-0 before:left-0 bg-gradient-to-b from-black/50 to-black">
-                  <h5 className="mb-0 text-lg font-normal text-white">{civ.titolo}</h5>
-                </div>
-              </a>
+            <Link href={url} key={civ.slug} passHref={true} className="relative block h-64 mb-8 articoli z-1">
+              {getImage(civ, `Immagine - ${civ.slug}`, 400, 400)}
+              <div className="absolute top-0 left-0 z-10 w-full h-8 bg-black/50">
+                <p className="absolute top-0 left-0 w-1/2 h-8 mb-0 text-xs leading-8 text-center text-white uppercase bg-red-600">{civ.categorie[0].nome}</p>
+              </div>
+              <div className="absolute bottom-0 left-0 flex items-end h-24 p-5 bg-center bg-cover heading z-1 before:absolute before:w-full before:h-full before:-z-1 before:top-0 before:left-0 bg-gradient-to-b from-black/50 to-black">
+                <h5 className="mb-0 text-lg font-normal text-white">{civ.titolo}</h5>
+              </div>
             </Link>
           )
         })}
@@ -149,15 +145,13 @@ function Civette({civette}:  CivetteProps) {
             const url = `/${civ.categorie[0].slug}/${civ.slug}`
             const data = format(new Date(civ.data), 'dd MMMM yyyy', { locale: it });
             return (
-              <Link key={civ.slug} href={url} passHref={true}>
-                <a className={cn('block', 'm-4', 'border-t', 'border-gray-500', 'border-solid', { 'border-t-0': idx < 3 })}>
-                  {idx < 3 && (<div className="relative h-56 mb-4">
-                    {getImage(civ, `Immagine - ${civ.titolo}`, 350, 214)}
-                  </div>)}
-                  <span className="inline-block px-3 py-1 mb-4 text-sm font-semibold leading-4 tracking-tight text-white uppercase bg-red-600">{civ.categorie[0].nome}</span>
-                  <h5 className="leading-5 text-gray-800">{civ.titolo}</h5>
-                  <span className="text-sm italic text-gray-400">{data}</span>
-                </a>
+              <Link key={civ.slug} href={url} passHref={true} className={cn('block', 'm-4', 'border-t', 'border-gray-500', 'border-solid', { 'border-t-0': idx < 3 })}>
+                {idx < 3 && (<div className="relative h-56 mb-4">
+                  {getImage(civ, `Immagine - ${civ.titolo}`, 350, 214)}
+                </div>)}
+                <span className="inline-block px-3 py-1 mb-4 text-sm font-semibold leading-4 tracking-tight text-white uppercase bg-red-600">{civ.categorie[0].nome}</span>
+                <h5 className="leading-5 text-gray-800">{civ.titolo}</h5>
+                <span className="text-sm italic text-gray-400">{data}</span>
               </Link>
             )
           })}
@@ -179,10 +173,8 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
           <div className="w-full px-4 lg:w-9/12">
             <div className="fondo">
               <div className="tag">
-                <Link href={`/${fondo.categorie[0].slug}`} passHref={true}>
-                  <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-4 tracking-tighter text-white uppercase bg-red-600">
-                    {fondo.categorie[0].nome}
-                  </a>
+                <Link href={`/${fondo.categorie[0].slug}`} passHref={true} className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-4 tracking-tighter text-white uppercase bg-red-600">
+                  {fondo.categorie[0].nome}
                 </Link>
               </div>
               <h2 className="mb-4 font-serif text-6xl font-normal">{fondo.titolo}</h2>
@@ -195,11 +187,9 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
               </div>
               <div className="items-center justify-between mt-8 continue-reading sm:flex">
                 <div className="continue-btn">
-                  <Link href={`/editoriali/${fondo.slug}`} passHref={true}>
-                    <a className="flex items-center px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
-                      Continua a leggere
-                      <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
-                    </a>
+                  <Link href={`/editoriali/${fondo.slug}`} passHref={true} className="flex items-center px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
+                    Continua a leggere
+                    <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
                   </Link>
                 </div>
                 <Share shareUrl={`/editoriali/${fondo.slug}`} />
@@ -208,10 +198,8 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
             {seconda_apertura && (
               <div className="pt-24 pb-12 seconda_apertura">
                 <div className="tag">
-                  <Link href={`/${seconda_apertura.categorie[0].slug}`} passHref={true}>
-                    <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-4 tracking-tighter text-white uppercase bg-red-600">
-                      {seconda_apertura.categorie[0].nome}
-                    </a>
+                  <Link href={`/${seconda_apertura.categorie[0].slug}`} passHref={true} className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-4 tracking-tighter text-white uppercase bg-red-600">
+                    {seconda_apertura.categorie[0].nome}
                   </Link>
                 </div>
                 <h2 className="mb-4 font-serif text-6xl font-normal">{seconda_apertura.titolo}</h2>
@@ -224,11 +212,9 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
                 </div>
                 <div className="items-center justify-between mt-8 continue-reading sm:flex">
                   <div className="continue-btn">
-                    <Link href={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`} passHref>
-                      <a className="flex items-center px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
-                        Continua a leggere
-                        <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
-                      </a>
+                    <Link href={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`} passHref className="flex items-center px-5 leading-10 text-gray-800 uppercase border border-gray-800 border-solid h-14">
+                      Continua a leggere
+                      <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
                     </Link>
                   </div>
                   <Share shareUrl={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`} />

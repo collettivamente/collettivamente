@@ -38,9 +38,7 @@ const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
                   <div className="container flex flex-wrap items-end h-full max-w-6xl mx-auto">
                     <div className="pb-4">
                       <div className="tag">
-                        <Link href={`/${editoriale.categorie[0].slug}`}>
-                          <a className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">{editoriale.categorie[0].nome}</a>
-                        </Link>
+                        <Link href={`/${editoriale.categorie[0].slug}`} className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600">{editoriale.categorie[0].nome}</Link>
                       </div>
                       <h2 className="font-serif text-6xl font-normal leading-tight text-white">{editoriale.titolo}</h2>
                       <p className="mb-4 text-base italic font-normal leading-loose text-white">{dt}</p>

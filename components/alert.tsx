@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Container from "./container";
 import cn from 'classnames'
 
@@ -7,13 +8,13 @@ const Alert: React.FC<{ preview: boolean }> = ({ preview }) => (
     'bg-accent-1 border-accent-2': !preview
   })}>
     <Container>
-      <div className="py-2 text-center text-sm">
+      <div className="py-2 text-sm text-center">
         {preview ? (
           <>
             This page is a preview. {' '}
-            <a href="/api/exit-preview" className="underline hover:text-cyan duration-200 transition-colors">
+            <Link href="/api/exit-preview" className="underline transition-colors duration-200 hover:text-cyan">
               Click here
-            </a>{' '}
+            </Link>{' '}
             to exit preview
           </>
         ) : (

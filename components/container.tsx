@@ -1,5 +1,5 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-const Container: React.FC<{}> = ({children}) => (<div className="container mx-auto px-5">{children}</div>)
+const Container: React.FC<{ children: ReactNode }> = ({children}) => (<div className="container px-5 mx-auto">{children}</div>)
 
 export default Container

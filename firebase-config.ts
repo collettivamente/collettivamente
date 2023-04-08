@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { initializeAnalytics } from "firebase/analytics";
+import { initializeAnalytics, isSupported } from "firebase/analytics";
 import { initializeAuth } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,8 +22,8 @@ export default function initFirebase() {
   if (!getApps().length) {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig)
-    const analytics = initializeAnalytics(app);
+    const analytics = isSupported().then(yes => yes ? initializeAnalytics(app) : null);
     const auth = initializeAuth(app);
   }
-  return getApp('Socialmente');
+  return getApp();
 }

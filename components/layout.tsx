@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactNode } from "react";
 import Footer from "./footer";
 import Meta from "./meta";
 
-type Props = { preview: boolean }
+type Props = { preview: boolean, children: ReactNode }
 const Layout: FunctionComponent<Props> = ({ preview, children }) => (
   <>
     <Meta />
