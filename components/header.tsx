@@ -9,10 +9,9 @@ import styles from "./header.module.css";
 import { Category } from "models"
 import { getMenu } from "@/lib/api"
 import { FaUser, FaUserCircle, FaUserSlash } from 'react-icons/fa'
-import { usePopper } from 'react-popper'
 import { useAuth } from "context/AuthContext";
 import { UserProfile } from "@/models/user"
-import { Avatar, Dropdown } from 'flowbite-react'
+import { Avatar, Dropdown, Tooltip } from 'flowbite-react'
 
 const fnIsCurrentPath = (router: NextRouter) => (path: string) => router.asPath === path;
 
@@ -122,9 +121,11 @@ export default function Header() {
                       <div className="pr-2 user">
                         {user?.uid
                           ? <UserPopover user={user} handleLogout={handleLogout} />
-                          : (<Link href="/login" passHref>
-                              <FaUserCircle className="w-8 h-8 text-gray-700"/>
-                            </Link>)
+                          : (<Tooltip content="Clicca qui per registrarti">
+                              <Link href="/login" passHref>
+                                <FaUserCircle className="w-8 h-8 text-gray-700"/>
+                              </Link>
+                            </Tooltip>)
                         }
                       </div>
                     </div>
