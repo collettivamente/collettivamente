@@ -46,7 +46,7 @@ const HomeEditoriali: NextPage<Data> = ({ preview, data }) => {
     <>
       <Layout preview={!!preview}>
         <Head>
-          <title>Socialmente</title>
+          <title>SocialMente</title>
         </Head>
         <Header />
         <Container>

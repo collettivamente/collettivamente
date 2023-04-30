@@ -248,21 +248,21 @@ const Home: NextPage<Data> = ({ preview, data }) => {
     <>
       <Layout preview={false}>
         <Head>
-          <title>Collettivamente</title>
+          <title>SocialMente</title>
         </Head>
         <NextSeo
-          title="Collettivamente"
-          description="Blog Collettivamente. Uno scambio di opinioni"
+          title="SocialMente"
+          description="Blog SocialMente. Uno scambio di opinioni"
           openGraph={{
             url,
-            title: "Collettivamente",
-            description: "Blog Collettivamente. Uno scambio di opinioni",
+            title: "SocialMente",
+            description: "Blog SocialMente. Uno scambio di opinioni",
             images: [
               {
                 url: imageUrl,
                 width: 400,
                 height: 98,
-                alt: "Collettivamente",
+                alt: "Socialmente",
                 type: "image/jpeg"
               }
             ]

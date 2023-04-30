@@ -4,11 +4,8 @@ facebook: https://www.facebook.com/Collettivamente-101060368918324
 
 twitter: collettivamente - collettiv@mente
 
-graphcms
-
-luigi_bruni@hotmail.it
-19.Settembre
-
+graphcms: <Accedi con github>
+firebase: <Accedi con la mail di google>
 
 url
 https://collettivamente.vercel.app/
@@ -23,4 +20,3 @@ password: aGZqNKYhVuhgU35
 github
 username: collettivamente
 password: gvvtbsfkc7g46wj
-

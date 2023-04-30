@@ -27,7 +27,7 @@ const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
     <>
       <Layout preview={!!preview}>
         <Head>
-          <title>Collettivamente</title>
+          <title>SocialMente</title>
         </Head>
         <Header />
         <Container>
