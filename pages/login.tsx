@@ -21,7 +21,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginType) => {
     try {
-      await logIn(data.email, data.password)
+      await logIn?.(data.email, data.password)
       router.push('/')
     } catch (error: any) {
       console.log(error.message)
@@ -36,16 +36,16 @@ export default function LoginPage() {
       </Head>
       <Header />
       <Container>
-        <div className="login-form container mx-auto w-auto sm:w-96 mt-12 border-2 border-gray-400">
-          <h2 className="px-12 mt-8 text-center text-2xl font-semibold text-blue-900">Accedi</h2>
+        <div className="container w-auto mx-auto mt-12 border-2 border-gray-400 login-form sm:w-96">
+          <h2 className="px-12 mt-8 text-2xl font-semibold text-center text-blue-900">Accedi</h2>
           <FormProvider {...methods}>
-            <form action="" className="w-auto sm:w-80 mx-auto pb-12 px-4" onSubmit={handleSubmit(onSubmit)}>
+            <form action="" className="w-auto px-4 pb-12 mx-auto sm:w-80" onSubmit={handleSubmit(onSubmit)}>
               <div className='mt-8'>
                 <div className='flex items-center justify-between'>
                   <label htmlFor='' className='block mb-3 font-sans text-blue-900'>Email</label>
                 </div>
                 <input type='email' {...register('email', { required: 'La mail è obbligatoria' })}
-                  className='border border-solid rounded-lg ring-0 focus:ring-0 focus:outline-none border-gray-400 text-gray-500 font-normal py-3 h-12 px-6 text-lg w-full flex items-center'
+                  className='flex items-center w-full h-12 px-6 py-3 text-lg font-normal text-gray-500 border border-gray-400 border-solid rounded-lg ring-0 focus:ring-0 focus:outline-none'
                   autoComplete="email"
                 />
                 {errors.email && <p className='text-red-400'>{errors.email.message}</p>}
@@ -56,14 +56,14 @@ export default function LoginPage() {
                 </div>
                 <input type='password'
                   {...register('password', { required: 'La password è obbligatoria' })}
-                  className='border border-solid rounded-lg ring-0 focus:ring-0 focus:outline-none border-gray-400 text-gray-500 font-normal py-3 h-12 px-6 text-lg w-full flex items-center'
+                  className='flex items-center w-full h-12 px-6 py-3 text-lg font-normal text-gray-500 border border-gray-400 border-solid rounded-lg ring-0 focus:ring-0 focus:outline-none'
                   autoComplete="current-password"
                 />
                 {errors.password && <p className='text-red-400'>{errors.password.message}</p>}
               </div>
               <div className="flex justify-center pt-8">
-                <button type="submit" className="h-12 text-center w-2/3 bg-blue-900 border-2 rounded-md hover:shadow-lg hover:bg-blue-800 text-lg transition">
-                  <p className="capitalize text-white font-normal">Invia</p>
+                <button type="submit" className="w-2/3 h-12 text-lg text-center transition bg-blue-900 border-2 rounded-md hover:shadow-lg hover:bg-blue-800">
+                  <p className="font-normal text-white capitalize">Invia</p>
                 </button>
               </div>
             </form>
@@ -71,7 +71,7 @@ export default function LoginPage() {
           <div className="text-center">
             <p>
               Non hai un account?&nbsp;
-              <Link className="text-blue-500 underline underline-offset-2 cursor-pointer" href='/signup'>Registrati</Link>
+              <Link className="text-blue-500 underline cursor-pointer underline-offset-2" href='/signup'>Registrati</Link>
             </p>
           </div>
         </div>

@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const { user } = useAuth()
 
   useEffect(() => {
-    if (!user.uid) {
+    if (!user?.uid) {
       router.push('/login')
     }
   }, [router, user])
