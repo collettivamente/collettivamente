@@ -33,6 +33,9 @@
       ],
       "@/helpers/*": [
         "helpers/*"
+      ],
+      "@/context/*": [
+        "context/*"
       ]
     },
     "plugins": [
