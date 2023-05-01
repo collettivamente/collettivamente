@@ -42,8 +42,8 @@ const PostPage: NextPage<Data> = ({ preview, articolo }) => {
             images: [
               {
                 url: articolo.immagine?.url ?? articolo.categorie[0].image.url ?? '',
-                width: 1600,
-                height: 900,
+                width: articolo.immagine?.width ?? articolo.categorie[0].image.width ?? 1600,
+                height: articolo.immagine?.height ?? articolo.categorie[0].image.height ?? 900,
                 alt: articolo.titolo,
                 type: "image/jpeg"
               }

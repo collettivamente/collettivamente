@@ -224,6 +224,8 @@ export async function getArticolo(slug: string) {
         }
         immagine {
           url
+          height
+          width
         }
         autori {
           nome
@@ -232,6 +234,8 @@ export async function getArticolo(slug: string) {
           nome
           image {
             url
+            width
+            height
           }
         }
       }
