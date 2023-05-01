@@ -14,7 +14,7 @@ async function  fetchAPI<T, TVars extends Variables | undefined>(query: RequestD
 }
 
 export async function getDataForHome<T>() {
-  type Response = { homepages: { posts: Post[], editoriali: Post[] }[], posts: Post[], categorie: Category[] }
+  type Response = { homepages: T[] }
   const resp = await fetchAPI<Response, undefined>(gql`
     fragment categoriaFields on Categoria {
       nome
@@ -73,6 +73,9 @@ export async function getDataForHome<T>() {
           ...articoloFields
         }
         civette {
+          ...articoloFields
+        }
+        grida {
           ...articoloFields
         }
       }
@@ -165,7 +168,7 @@ export async function getArticoliByCategory(category: string, start: number = 0)
         image {
           url
         }
-        articoli(skip: $start, first: 12) {
+        articoli(skip: $start, first: 12, orderBy: data_DESC) {
           titolo
           slug
           data

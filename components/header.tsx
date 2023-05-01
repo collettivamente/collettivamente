@@ -121,7 +121,7 @@ export default function Header() {
                       <div className="pr-2 user">
                         {user?.uid
                           ? <UserPopover user={user} handleLogout={handleLogout} />
-                          : (<Tooltip content="Clicca qui per registrarti">
+                          : (<Tooltip content="Clicca qui per accedere">
                               <Link href="/login" passHref>
                                 <FaUserCircle className="w-8 h-8 text-gray-700"/>
                               </Link>

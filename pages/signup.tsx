@@ -12,6 +12,8 @@ import { useState } from 'react'
 import cn from 'classnames'
 import InputMask from 'react-input-mask'
 import { format, parse } from 'date-fns'
+import { Alert, Toast } from 'flowbite-react'
+import { HiExclamation } from 'react-icons/hi'
 
 interface SignupType extends Omit<UserProfile, 'uid' | 'meta' | 'photoURL'> {
   password: string;
@@ -21,15 +23,16 @@ interface SignupType extends Omit<UserProfile, 'uid' | 'meta' | 'photoURL'> {
 }
 
 export default function SingupPage() {
-  const { signUp, user } = useAuth()
+  const { signUp, user, getError } = useAuth()
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
+  const [message, setMessage] = useState<string>()
 
   const methods = useForm<SignupType>({ mode: 'onBlur' })
   const { register, handleSubmit, getValues, formState: { errors, isValid } } = methods
 
   const labelClasses = (errors?: FieldError) => cn('block', 'mb-3',  'font-sans', { 'text-blue-900': !errors }, { 'text-red-400': errors })
-  const inputClasses = (errors?: FieldError) => cn('flex', 'items-center', 'w-full', 'h-12', 'px-6', 'py-3', 'text-lg', 'font-normal', 'text-gray-500', 'border', { 'border-gray-400': !errors }, { 'border-red-400': errors }, 'border-solid', 'rounded-lg', 'ring-0', 'focus:ring-0', 'focus:outline-none')
+  const inputClasses = (errors?: FieldError) => cn('flex', 'items-center', 'w-full', 'h-12', 'px-6', 'py-3', 'text-base', 'font-normal', 'text-gray-500', 'border', { 'border-gray-400': !errors }, { 'border-red-400': errors }, 'border-solid', 'rounded-lg', 'ring-0', 'focus:ring-0', 'focus:outline-none')
 
   const goToNext = () => { setCurrentStep(currentStep + 1) }
   const goToPrev = () => { setCurrentStep(currentStep - 1) }
@@ -44,6 +47,12 @@ export default function SingupPage() {
       router.push('/')
     } catch (error: any) {
       console.error(error.message)
+      const msg = getError?.(error)
+      if (msg) {
+        setMessage(msg)
+      } else {
+        setMessage('Opps! Qualcosa è andato storto. Riprovare più tardi')
+      }
     }
   }
 
@@ -55,8 +64,25 @@ export default function SingupPage() {
       </Head>
       <Header />
       <Container>
-        <div className='container w-auto mx-auto mt-12 mb-4 border-2 border-gray-400 sign-up-form sm:w-96'>
+        <div className='container w-auto mx-auto mt-12 mb-4'>
+          <Alert color={'info'}>
+            <p>Registrarsi al blog SocialMente ti consente di poterti iscrivere alla newsletter e proporti 
+              come collaboratore per partecipare alla stesura degli articoli e poter intervenire nel dibattito</p>
+          </Alert>
+        </div>
+        <div className='container w-auto mx-auto mt-12 mb-4 border-2 border-gray-200 sign-up-form sm:w-96'>
           <h2 className='px-12 mt-8 text-2xl font-semibold text-center text-blue-900'>Registrati</h2>
+          {message && <div className="flex items-center justify-center">
+            <Toast className="bg-red-200">
+              <div className="inline-flex items-center justify-center w-8 h-8 text-red-500 bg-red-100 rounded-lg shrink-0">
+                <HiExclamation className="w-5 h-5" />
+              </div>
+              <div className="ml-3 text-sm font-normal text-red-500">
+                {message}
+              </div>
+              <Toast.Toggle className="text-red-500" onClick={() => setMessage(undefined)} />
+            </Toast>
+          </div>}
           <div className='w-full py-6'>
             <div className='flex'>
               {Array.of(0, 1).map(it => (
@@ -86,9 +112,9 @@ export default function SingupPage() {
                 <>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className={labelClasses(errors.email)}>Email</label>
+                      <label htmlFor='email' className={labelClasses(errors.email)}>Email</label>
                     </div>
-                    <input type='email' {...register('email', { required: 'La mail è obbligatoria', 
+                    <input type='email' id='email' {...register('email', { required: 'La mail è obbligatoria', 
                       pattern: { value: /^[^\s]+@[^\s]+\.[^\s]+$/, message: 'La mail non è valida' } }) } 
                       className={inputClasses(errors.email)}
                       aria-invalid={!!errors.email}
@@ -98,9 +124,9 @@ export default function SingupPage() {
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className={labelClasses(errors.password)}>Password</label>
+                      <label htmlFor='password' className={labelClasses(errors.password)}>Password</label>
                     </div>
-                    <input type='password'
+                    <input type='password' id='password'
                       {...register('password', { required: 'La password è obbligatoria', 
                       minLength: { value: 6, message: 'La password è troppo corta' } })}
                       className={inputClasses(errors.password)} aria-invalid={!!errors.password}
@@ -110,9 +136,9 @@ export default function SingupPage() {
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className={labelClasses(errors.password_confirm)}>Conferma password</label>
+                      <label htmlFor='password_confirm' className={labelClasses(errors.password_confirm)}>Conferma password</label>
                     </div>
-                    <input type='password'
+                    <input type='password' id='password_confirm'
                       {...register('password_confirm', { required: 'Controlla la password', validate: (val) => {
                         const pwd = getValues('password')
                         if (pwd !== val) {
@@ -137,27 +163,27 @@ export default function SingupPage() {
                 <>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className={labelClasses(errors.name)}>Nome</label>
+                      <label htmlFor='name' className={labelClasses(errors.name)}>Nome</label>
                     </div>
-                    <input type='text' {...register('name', { required: 'Il nome è obbligatorio' })}
+                    <input type='text' id='name' {...register('name', { required: 'Il nome è obbligatorio' })}
                       className={inputClasses(errors.name)} aria-invalid={!!errors.name}
                     />
                     {errors.name && <p role='alert' className='text-red-400'>{errors.name.message}</p>}
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className={labelClasses(errors.surname)}>Cognome</label>
+                      <label htmlFor='surname' className={labelClasses(errors.surname)}>Cognome</label>
                     </div>
-                    <input type='text' {...register('surname', { required: 'Il cognome è obbligatorio' })}
+                    <input type='text' id='surname' {...register('surname', { required: 'Il cognome è obbligatorio' })}
                       className={inputClasses(errors.surname)} aria-invalid={!!errors.surname}
                     />
                     {errors.surname && <p role='alert' className='text-red-400'>{errors.surname.message}</p>}
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className={labelClasses(errors.gender)}>Sesso</label>
+                      <label htmlFor='gender' className={labelClasses(errors.gender)}>Sesso</label>
                     </div>
-                    <select className={inputClasses(errors.gender)} aria-invalid={!!errors.gender}
+                    <select id='gender' className={inputClasses(errors.gender)} aria-invalid={!!errors.gender}
                       {...register('gender', { required: 'Il sesso è obbligatorio', 
                       pattern: { value: /^[M|F|A]$/, message: 'Il sesso scelto non è valido' } })}>
                       <option value={''}></option>
@@ -169,9 +195,9 @@ export default function SingupPage() {
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className={labelClasses(errors.birthdate)}>Data di nascita</label>
+                      <label htmlFor='birthdate' className={labelClasses(errors.birthdate)}>Data di nascita</label>
                     </div>
-                    <InputMask mask="99/99/9999" {...register('birthdate', { required: 'La data di nascita non è valida' })}
+                    <InputMask id='birthdate' mask="99/99/9999" {...register('birthdate', { required: 'La data di nascita non è valida' })}
                       className={inputClasses(errors.birthdate)} aria-invalid={!!errors.birthdate}></InputMask>
                     {/* <input type='text' {...register('birthdate', { required: 'La data di nascita è obbligatoria' })}
                       className={inputClasses(errors.birthdate)} aria-invalid={!!errors.birthdate}
@@ -180,25 +206,25 @@ export default function SingupPage() {
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className='block mb-3 font-sans text-blue-900'>Telefono</label>
+                      <label htmlFor='phone' className='block mb-3 font-sans text-blue-900'>Telefono</label>
                     </div>
-                    <input type='text' {...register('phone')}
+                    <input type='text' id='phone' {...register('phone')}
                       className='flex items-center w-full h-12 px-6 py-3 text-lg font-normal text-gray-500 border border-gray-400 border-solid rounded-lg ring-0 focus:ring-0 focus:outline-none'
                     />
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className='block mb-3 font-sans text-blue-900'>Vuoi iscriverti alla newsletter?</label>
+                      <label htmlFor='newsletter' className='block mb-3 font-sans text-blue-900'>Vuoi iscriverti alla newsletter?</label>
                     </div>
-                    <input type='checkbox' {...register('newsletter')}
+                    <input type='checkbox' id='newsletter' {...register('newsletter')}
                       className='flex items-center text-lg font-normal text-gray-500 border border-gray-400 border-solid rounded ring-0 focus:ring-0 focus:outline-none'
                     />
                   </div>
                   <div className='mt-8'>
                     <div className='flex items-center justify-between'>
-                      <label htmlFor='' className='block mb-3 font-sans text-blue-900'>Vuoi diventare un nostro collaboratore?</label>
+                      <label htmlFor='publisher' className='block mb-3 font-sans text-blue-900'>Vuoi diventare un nostro collaboratore?</label>
                     </div>
-                    <input type='checkbox' {...register('publisher')}
+                    <input type='checkbox' id='publisher' {...register('publisher')}
                       className='flex items-center text-lg font-normal text-gray-500 border border-gray-400 border-solid rounded ring-0 focus:ring-0 focus:outline-none'
                     />
                   </div>
@@ -216,7 +242,7 @@ export default function SingupPage() {
               ) }
             </form>
           </FormProvider>
-          <div className="text-center">
+          <div className="mb-2 text-center">
             <p>
               Hai già un account?&nbsp;
               <Link className="text-blue-500 underline cursor-pointer underline-offset-2" href='/login'>Accedi</Link>

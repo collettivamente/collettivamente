@@ -28,6 +28,7 @@ interface HomeData {
   seconda_apertura?: ShortArticle;
   contornati: ShortArticle[];
   civette: ShortArticle[];
+  grida: ShortArticle[];
 }
 
 interface Data {
@@ -113,6 +114,7 @@ function Contornati({contornati}: ContornatiProps) {
         <h5 className="pb-5 mb-8 text-lg text-gray-600 uppercase border-b border-gray-500 border-solid">
           Articoli principali
         </h5>
+        <div className='grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-1 lg:grid-cols-1 lg:gap-0'>
         {contornati.map(civ => {
           const url = `/${civ.categorie[0].slug}/${civ.slug}`
           return (
@@ -121,12 +123,13 @@ function Contornati({contornati}: ContornatiProps) {
               <div className="absolute top-0 left-0 z-10 w-full h-8 bg-black/50">
                 <p className="absolute top-0 left-0 w-1/2 h-8 mb-0 text-xs leading-8 text-center text-white uppercase bg-red-600">{civ.categorie[0].nome}</p>
               </div>
-              <div className="absolute bottom-0 left-0 flex items-end h-24 p-5 bg-center bg-cover heading z-1 before:absolute before:w-full before:h-full before:-z-1 before:top-0 before:left-0 bg-gradient-to-b from-black/50 to-black">
+              <div className="absolute bottom-0 left-0 flex items-end w-full p-5 bg-center bg-cover min-h-fit heading z-1 before:absolute before:w-full before:h-full before:-z-1 before:top-0 before:left-0 bg-gradient-to-b from-black/50 to-black">
                 <h5 className="mb-0 text-lg font-normal text-white">{civ.titolo}</h5>
               </div>
             </Link>
           )
         })}
+        </div>
       </div>
       <div className="links">
         <Links />
@@ -161,8 +164,35 @@ function Civette({civette}:  CivetteProps) {
   )
 }
 
-type MainContentData = Pick<HomeData, 'fondo' | 'seconda_apertura' | 'contornati' | 'civette'>
-function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: MainContentData) {
+type GridaProps = Pick<HomeData, 'grida'>
+function Grida({ grida }: GridaProps) {
+  return (
+    <div className="sidebar-area">
+      <div className="ultimi-articoli">
+        <h5 className="pb-5 mb-8 text-lg text-gray-600 uppercase border-b border-gray-500 border-solid">
+          In evidenza
+        </h5>
+        {grida.map(civ => {
+          const url = `/${civ.categorie[0].slug}/${civ.slug}`
+          return (
+            <Link href={url} key={civ.slug} passHref={true} className="relative block h-64 mb-8 articoli z-1">
+              {getImage(civ, `Immagine - ${civ.slug}`, 400, 400)}
+              <div className="absolute top-0 left-0 z-10 w-full h-8 bg-black/50">
+                <p className="absolute top-0 left-0 w-1/2 h-8 mb-0 text-xs leading-8 text-center text-white uppercase bg-red-600">{civ.categorie[0].nome}</p>
+              </div>
+              <div className="absolute bottom-0 left-0 flex items-end h-24 p-5 bg-center bg-cover heading z-1 before:absolute before:w-full before:h-full before:-z-1 before:top-0 before:left-0 bg-gradient-to-b from-black/50 to-black">
+                <h5 className="mb-0 text-lg font-normal text-white">{civ.titolo}</h5>
+              </div>
+            </Link>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+type MainContentData = Pick<HomeData, 'fondo' | 'seconda_apertura' | 'contornati' | 'civette' | 'grida'>
+function MainContentWrapper({fondo, seconda_apertura, contornati, civette, grida}: MainContentData) {
   const data = format(new Date(fondo.data), 'dd MMMM yyyy', { locale: it });
   const data_sec = seconda_apertura ? format(new Date(seconda_apertura.data), 'dd MMMM yyyy', { locale: it }) : ''
 
@@ -170,7 +200,10 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
     <section className="py-24 main-content-wrapper">
       <div className="container max-w-6xl px-4 mx-auto">
         <div className="flex flex-wrap -mx-4">
-          <div className="w-full px-4 lg:w-9/12">
+          <div className="order-2 w-full px-4 md:w-3/12 md:order-1">
+            <Grida grida={grida} />
+          </div>
+          <div className="order-1 w-full px-4 lg:w-6/12 md:w-9/12 md:order-2">
             <div className="fondo">
               <div className="tag">
                 <Link href={`/${fondo.categorie[0].slug}`} passHref={true} className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-4 tracking-tighter text-white uppercase bg-red-600">
@@ -222,7 +255,7 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette}: Main
               </div>
             )}
           </div>
-          <div className="w-full px-4 lg:w-3/12 md:w-6/12">
+          <div className="order-3 w-full px-4 lg:w-3/12">
             <Contornati contornati={contornati} />
           </div>
         </div>
@@ -271,7 +304,7 @@ const Home: NextPage<Data> = ({ preview, data }) => {
         <Header />
         <Container>
           <Welcome apertura={data.apertura} />
-          <MainContentWrapper fondo={data.fondo} seconda_apertura={data.seconda_apertura} contornati={data.contornati} civette={data.civette} />
+          <MainContentWrapper fondo={data.fondo} seconda_apertura={data.seconda_apertura} contornati={data.contornati} civette={data.civette} grida={data.grida} />
         </Container>
       </Layout>
     </>

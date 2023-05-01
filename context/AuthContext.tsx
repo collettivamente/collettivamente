@@ -3,13 +3,15 @@ import { UserCredential, createUserWithEmailAndPassword, onAuthStateChanged, sig
 import { setDoc, doc, getDoc, FirestoreDataConverter } from 'firebase/firestore'
 import { auth, firestore } from '../firebase-config'
 import { UserProfile } from '@/models/user'
+import { FirebaseError } from 'firebase/app'
 
 type IUser = Pick<UserProfile, 'email' | 'uid' | 'name'>
 type SignUpFn = (email: string, password: string, profile: UserProfile) => Promise<UserCredential | undefined>;
 type LogInFn = (email: string, password: string) => Promise<UserCredential>;
 type LogOutFn = () => Promise<void>;
+type GetErrorFn = (error: FirebaseError) => string
 
-const AuthContext = createContext<Partial<{ user: IUser, signUp: SignUpFn, logIn: LogInFn, logOut: LogOutFn }>>({ })
+const AuthContext = createContext<Partial<{ user: IUser, signUp: SignUpFn, logIn: LogInFn, logOut: LogOutFn, getError: GetErrorFn }>>({ })
 
 export const useAuth = () => useContext(AuthContext)
 
@@ -88,8 +90,29 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     await signOut(auth)
   }
 
+  const getError = (error: any) => {
+    if (!(error instanceof FirebaseError)) {
+      if (error.message) { return error.message }
+      return ''
+    }
+    switch (error.code) {
+      case 'auth/email-already-exists':
+        return 'La mail inserita è già registrata nel sistema'
+      case 'auth/internal-error':
+        return 'Opps! Qualcosa è andato storto. Riprovare più tardi'
+      case 'auth/invalid-email':
+        return 'La mail inserita non è valida'
+      case 'auth/invalid-password':
+        return 'La password inserita non è valida'
+      case 'auth/user-not-found':
+        return 'L\'utente inserito non esiste'
+      default:
+        return ''
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signUp, logIn, logOut }}>
+    <AuthContext.Provider value={{ user, signUp, logIn, logOut, getError }}>
       { loading ? null : children }
     </AuthContext.Provider>
   )
