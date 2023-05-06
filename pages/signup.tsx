@@ -251,5 +251,5 @@ export default function SingupPage() {
         </div>
       </Container>
     </Layout>
-  )
+  );
 }

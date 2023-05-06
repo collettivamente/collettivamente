@@ -3,7 +3,7 @@ import Link from "next/link";
 import classNames from "classnames";
 import { NextRouter, useRouter } from "next/router";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
-import Image from 'next/image'
+import Image from "next/image"
 import Logo from "../public/images/socialmente.svg";
 import styles from "./header.module.css";
 import { Category } from "models"

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 import styles from './Carousel.module.css'
-import Image from 'next/image'
+import Image from "next/image"
 import { useCallback } from 'react'
 import classNames from 'classnames'
 import { useState } from 'react'
@@ -51,7 +51,12 @@ const Carousel: React.FC<Props> = ({ slides }) => {
           {slides.map((slide, idx) => (
             <div className={`${styles.embla__slide} w-full h-80 flex`} key={slide.slug}>
               <div className="relative w-full h-full md:w-5/12 md:px-4">
-                <Image loader={GraphCMSImageLoader} src={slide.immagine?.url ?? slide.categorie[0].image.url} layout="fill" alt={`Immagine - ${slide.titolo}`} />
+                <Image
+                  loader={GraphCMSImageLoader}
+                  src={slide.immagine?.url ?? slide.categorie[0].image.url}
+                  alt={`Immagine - ${slide.titolo}`}
+                  fill
+                  sizes="100vw" />
               </div>
               <div className="w-full md:w-7/12 md:px-4">
                 <Link href={`/editoriali`} passHref={true} className='inline-block px-3 py-1 mb-4 text-sm font-bold leading-none text-white uppercase bg-red-600'>
@@ -79,7 +84,7 @@ const Carousel: React.FC<Props> = ({ slides }) => {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default Carousel

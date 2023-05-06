@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import type { NextPage, GetStaticProps } from 'next'
 import Head from "next/head"
-import Image from "next/legacy/image"
+import Image from "next/image"
 import Link from 'next/link'
 import Container from "@/components/container"
 import Layout from "@/components/layout"
@@ -16,10 +16,10 @@ import {LongArticle, ShortArticle, Editoriale, Articolo} from '../models'
 import { GraphCMSImageLoader } from '../helpers/utils'
 import styled from 'styled-components'
 import { RichText } from '@graphcms/rich-text-react-renderer'
-import { FaChevronRight, FaFacebook, FaLinkedin, FaPinterest, FaTwitter } from 'react-icons/fa'
-import { FacebookShareButton, PinterestShareButton, LinkedinShareButton, TwitterShareButton, PinterestIcon, LinkedinIcon, FacebookIcon, TwitterIcon } from 'react-share'
+import { FaChevronRight } from 'react-icons/fa'
+import Share from '@/components/share';
 import { NextSeo } from "next-seo"
-import { useRouter } from 'next/router'
+
 
 interface HomeData {
   fondo: Editoriale;
@@ -40,16 +40,28 @@ const getImage = (article: Pick<Articolo | Editoriale, 'immagine' | 'categorie'>
   let img = article.immagine;
   if (img) {
     return (
-      <Image loader={GraphCMSImageLoader} src={img.url} alt={alt} layout="fill" className="object-cover" />
-    )
+      <Image
+        loader={GraphCMSImageLoader}
+        src={img.url}
+        alt={alt}
+        className="object-cover"
+        fill
+        sizes="100vw" />
+    );
   }
   if (article.categorie.length) {
     const mainCat = article.categorie[0];
     img = mainCat.image;
     if (img) {
       return (
-        <Image loader={GraphCMSImageLoader} src={img.url} alt={alt} layout="fill" className="object-cover" />
-      )
+        <Image
+          loader={GraphCMSImageLoader}
+          src={img.url}
+          alt={alt}
+          className="object-cover"
+          fill
+          sizes="100vw" />
+      );
     }
   }
 
@@ -82,27 +94,6 @@ function Welcome({ apertura }: WelcomeProps) {
         </div>
       </div>
     </section>
-  )
-}
-
-function Share({ shareUrl }: { shareUrl: string }) {
-  const url = typeof window !== 'undefined' ? new URL(shareUrl, window.location.href).toString() : shareUrl;
-  
-  return (
-    <div className="text-gray-300 share">
-      <PinterestShareButton media="" url={url}>
-        <PinterestIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
-      </PinterestShareButton>
-      <LinkedinShareButton url={url}>
-        <LinkedinIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
-      </LinkedinShareButton>
-      <FacebookShareButton url={url}>
-        <FacebookIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
-      </FacebookShareButton>
-      <TwitterShareButton url={url}>
-        <TwitterIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
-      </TwitterShareButton>
-    </div>
   )
 }
 
@@ -199,12 +190,12 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette, grida
   return (
     <section className="py-24 main-content-wrapper">
       <div className="container max-w-6xl px-4 mx-auto">
-        <div className="flex flex-wrap -mx-4">
-          <div className="order-2 w-full px-4 md:w-3/12 md:order-1">
+        <div className="flex flex-wrap pb-1 -mx-4 border-b border-gray-500">
+          <div className="order-2 w-full px-4 md:w-3/12 md:order-1 md:border-r md:border-gray-500">
             <Grida grida={grida} />
           </div>
           <div className="order-1 w-full px-4 lg:w-6/12 md:w-9/12 md:order-2">
-            <div className="fondo">
+            <div className="pb-2 border-b border-gray-500 fondo">
               <div className="tag">
                 <Link href={`/${fondo.categorie[0].slug}`} passHref={true} className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-4 tracking-tighter text-white uppercase bg-red-600">
                   {fondo.categorie[0].nome}
@@ -225,11 +216,11 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette, grida
                     <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
                   </Link>
                 </div>
-                <Share shareUrl={`/editoriali/${fondo.slug}`} />
+                <Share shareUrl={`/editoriali/${fondo.slug}`} media={fondo.immagine?.url ?? ''} />
               </div>
             </div>
             {seconda_apertura && (
-              <div className="pt-24 pb-12 seconda_apertura">
+              <div className="pt-12 pb-12 seconda_apertura">
                 <div className="tag">
                   <Link href={`/${seconda_apertura.categorie[0].slug}`} passHref={true} className="inline-block px-3 py-1 mb-4 text-sm font-bold leading-4 tracking-tighter text-white uppercase bg-red-600">
                     {seconda_apertura.categorie[0].nome}
@@ -250,12 +241,13 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette, grida
                       <FaChevronRight aria-hidden="true" className="inline-block w-4 h-4 ml-4" />
                     </Link>
                   </div>
-                  <Share shareUrl={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`} />
+                  <Share shareUrl={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`}
+                    media={seconda_apertura.immagine.url} />
                 </div>
               </div>
             )}
           </div>
-          <div className="order-3 w-full px-4 lg:w-3/12">
+          <div className="order-3 w-full px-4 lg:w-3/12 lg:border-l lg:border-gray-500">
             <Contornati contornati={contornati} />
           </div>
         </div>

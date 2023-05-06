@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import Image from 'next/image'
+import Image from "next/image"
 import Link from 'next/link'
 import { GraphCMSImageLoader } from '@/helpers/utils'
 
@@ -22,7 +22,10 @@ const CoverImage: React.FC<Data> = ({ title, url, slug }) => {
       className={cn('shadow-small', {
         'hover:shadow-medium transition-shadow duration-200': slug
       })}
-    />
+      style={{
+        maxWidth: "100%",
+        height: "auto"
+      }} />
   )
 
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
+import Image from "next/image"
 import { getArticoliByCategory, getMenu } from '@/lib/api'
 import Layout from '@/components/layout'
 import Header from '@/components/header'
@@ -30,7 +30,7 @@ const getImage = (post: Pick<Articolo, 'immagine'>, alt: string) => {
   if (post.immagine) {
     const img = post.immagine
 
-    return <Image loader={GraphCMSImageLoader} src={img.url} alt={alt} layout="fill" />
+    return <Image loader={GraphCMSImageLoader} src={img.url} alt={alt} fill sizes="100vw" />;
   }
 
   return (<div className="w-full h-auto p-2 overflow-hidden bg-gray-800">
