@@ -49,24 +49,6 @@ const HomeEditoriali: NextPage<Data> = ({ preview, data }) => {
       <Layout preview={!!preview}>
         <Head>
           <title>SocialMente</title>
-          <NextSeo
-            title={'SocialMente - Editoriali'}
-            description={'Lista degli editoriali del blog SocialMente'}
-            openGraph={{
-              title: 'SocialMente - Editoriali',
-              description: 'Lista degli editoriali del blog SocialMente',
-              url: baseUrl,
-              images: mainImage ? [
-                {
-                  url: mainImage.url,
-                  width: mainImage.width,
-                  height: mainImage.height,
-                  alt: 'Immagine - Editoriali - SocialMente',
-                  type: mainImage.mimeType 
-                }
-              ] : []
-            }}
-          />
         </Head>
         <Header />
         <Container>
@@ -111,6 +93,24 @@ const HomeEditoriali: NextPage<Data> = ({ preview, data }) => {
           </section>
         </Container>
       </Layout>
+      <NextSeo
+        title={'SocialMente - Editoriali'}
+        description={'Lista degli editoriali del blog SocialMente'}
+        openGraph={{
+          title: 'SocialMente - Editoriali',
+          description: 'Lista degli editoriali del blog SocialMente',
+          url: baseUrl,
+          images: mainImage ? [
+            {
+              url: mainImage.url,
+              width: mainImage.width,
+              height: mainImage.height,
+              alt: 'Immagine - Editoriali - SocialMente',
+              type: mainImage.mimeType 
+            }
+          ] : []
+        }}
+      />
     </>
   )
 }

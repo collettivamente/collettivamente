@@ -274,24 +274,6 @@ const Home: NextPage<Data> = ({ preview, data }) => {
       <Layout preview={false}>
         <Head>
           <title>SocialMente</title>
-          <NextSeo
-            title="SocialMente"
-            description="Blog SocialMente. Uno scambio di opinioni"
-            openGraph={{
-              url,
-              title: "SocialMente",
-              description: "Blog SocialMente. Uno scambio di opinioni",
-              images: [
-                {
-                  url: imageUrl,
-                  width: 400,
-                  height: 98,
-                  alt: "Socialmente",
-                  type: "image/jpeg"
-                }
-              ]
-            }}
-          />
         </Head>
         <Header />
         <Container>
@@ -299,6 +281,24 @@ const Home: NextPage<Data> = ({ preview, data }) => {
           <MainContentWrapper fondo={data.fondo} seconda_apertura={data.seconda_apertura} contornati={data.contornati} civette={data.civette} grida={data.grida} />
         </Container>
       </Layout>
+      <NextSeo
+        title="SocialMente"
+        description="Blog SocialMente. Uno scambio di opinioni"
+        openGraph={{
+          url,
+          title: "SocialMente",
+          description: "Blog SocialMente. Uno scambio di opinioni",
+          images: [
+            {
+              url: imageUrl,
+              width: 400,
+              height: 98,
+              alt: "Socialmente",
+              type: "image/jpeg"
+            }
+          ]
+        }}
+      />
     </>
   )
 }

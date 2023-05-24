@@ -53,26 +53,6 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
       <Layout preview={!!preview}>
         <Head>
           <title>SocialMente</title>
-          <NextSeo
-            title={'Articoli - ' + (mainCategory ? mainCategory.nome + ' -' : '') + ' SocialMente'}
-            description={'Lista degli articoli della categoria ' + (mainCategory?.nome ?? '')}
-            openGraph={{
-              url: baseUrl,
-              title: 'Articoli - ' + (mainCategory ? mainCategory.nome + ' -' : '') + ' SocialMente',
-              description: 'Lista degli articoli della categoria ' + (mainCategory?.nome ?? ''),
-              siteName: 'SocialMente',
-              type: 'website',
-              images: mainImage ? [
-                {
-                  url: mainImage.url,
-                  width: mainImage.width,
-                  height: mainImage.height,
-                  alt: 'Immagine - ' + (mainCategory?.nome ?? ''),
-                  type: mainImage.mimeType
-                }
-              ] : []
-            }}
-          />
         </Head>
         <Header />
         <Container>
@@ -117,6 +97,26 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
           </section>
         </Container>
       </Layout>
+      <NextSeo
+        title={'Articoli - ' + (mainCategory ? mainCategory.nome + ' -' : '') + ' SocialMente'}
+        description={'Lista degli articoli della categoria ' + (mainCategory?.nome ?? '')}
+        openGraph={{
+          url: baseUrl,
+          title: 'Articoli - ' + (mainCategory ? mainCategory.nome + ' -' : '') + ' SocialMente',
+          description: 'Lista degli articoli della categoria ' + (mainCategory?.nome ?? ''),
+          siteName: 'SocialMente',
+          type: 'website',
+          images: mainImage ? [
+            {
+              url: mainImage.url,
+              width: mainImage.width,
+              height: mainImage.height,
+              alt: 'Immagine - ' + (mainCategory?.nome ?? ''),
+              type: mainImage.mimeType
+            }
+          ] : []
+        }}
+      />
     </>
   )
 }

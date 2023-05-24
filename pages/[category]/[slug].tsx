@@ -32,30 +32,6 @@ const PostPage: NextPage<Data> = ({ preview, articolo }) => {
       <Head>
         <title>{articolo.titolo}</title>
         <meta name="description" content={articolo.sommario ?? articolo.titolo} />
-        {articolo && <NextSeo
-          title={articolo.titolo}
-          description={articolo.sommario}
-          openGraph={{
-            url,
-            title: articolo.titolo,
-            description: articolo.sommario,
-            siteName: 'SocialMente',
-            type: 'article',
-            article: {
-              publishedTime: articolo.data,
-              authors: articolo.autori.map(au => au.nome)
-            },
-            images: mainImage ? [
-              {
-                url: mainImage.url,
-                width: mainImage.width,
-                height: mainImage.height,
-                alt: articolo.titolo,
-                type: mainImage.mimeType
-              }
-            ] : []
-          }}
-        />}
       </Head>
       <Header />
       <Container>
@@ -113,6 +89,30 @@ const PostPage: NextPage<Data> = ({ preview, articolo }) => {
         </section>
       </Container>
     </Layout>
+    {articolo && <NextSeo
+      title={articolo.titolo}
+      description={articolo.sommario}
+      openGraph={{
+        url,
+        title: articolo.titolo,
+        description: articolo.sommario,
+        siteName: 'SocialMente',
+        type: 'article',
+        article: {
+          publishedTime: articolo.data,
+          authors: articolo.autori.map(au => au.nome)
+        },
+        images: mainImage ? [
+          {
+            url: mainImage.url,
+            width: mainImage.width,
+            height: mainImage.height,
+            alt: articolo.titolo,
+            type: mainImage.mimeType
+          }
+        ] : []
+      }}
+    />}
   </>;
 }
 

@@ -29,32 +29,6 @@ const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
     <Layout preview={!!preview}>
       <Head>
         <title>SocialMente</title>
-        <NextSeo
-          title={editoriale.titolo}
-          description={'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', ')}
-          openGraph={{
-            title: editoriale.titolo,
-            description: 'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', '),
-            url: '/editoriali/' + editoriale.slug,
-            images: editoriale.immagine ? [
-              {
-                url: editoriale.immagine.url,
-                width: editoriale.immagine.width,
-                height: editoriale.immagine.height,
-                alt: 'Immagine - ' + editoriale.titolo,
-                type: editoriale.immagine.mimeType
-              }
-            ] : mainCategory ? [
-              {
-                url: mainCategory.image.url,
-                width: mainCategory.image.width,
-                height: mainCategory.image.height,
-                alt: 'Immagine - ' + editoriale.titolo,
-                type: mainCategory.image.mimeType
-              }
-            ] : []
-          }}
-        />
       </Head>
       <Header />
       <Container>
@@ -106,6 +80,32 @@ const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
         </section>
       </Container>
     </Layout>
+    <NextSeo
+      title={editoriale.titolo}
+      description={'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', ')}
+      openGraph={{
+        title: editoriale.titolo,
+        description: 'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', '),
+        url: '/editoriali/' + editoriale.slug,
+        images: editoriale.immagine ? [
+          {
+            url: editoriale.immagine.url,
+            width: editoriale.immagine.width,
+            height: editoriale.immagine.height,
+            alt: 'Immagine - ' + editoriale.titolo,
+            type: editoriale.immagine.mimeType
+          }
+        ] : mainCategory ? [
+          {
+            url: mainCategory.image.url,
+            width: mainCategory.image.width,
+            height: mainCategory.image.height,
+            alt: 'Immagine - ' + editoriale.titolo,
+            type: mainCategory.image.mimeType
+          }
+        ] : []
+      }}
+    />
   </>;
 }
 
