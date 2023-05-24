@@ -154,10 +154,16 @@ export async function getArticoliByCategory(category: string, start: number = 0)
         }
         immagine {
           url
+          width
+          height
+          mimeType
         }
         categorie {
           image {
             url
+            width
+            height
+            mimeType
           }
         }
       }
@@ -272,6 +278,9 @@ export async function getEditoriale(slug: string) {
         }
         immagine {
           url
+          width
+          height
+          mimeType
         }
         autori {
           nome
@@ -280,6 +289,9 @@ export async function getEditoriale(slug: string) {
           nome
           image {
             url
+            width
+            height
+            mimeType
           }
         }
       }

@@ -23,30 +23,39 @@ interface Data {
 
 const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
   const dt = format(editoriale ? new Date(editoriale.data) : new Date(), 'dd MMMM yyyy', { locale: it })
+  const mainCategory = editoriale.categorie[0]
 
   return <>
     <Layout preview={!!preview}>
       <Head>
         <title>SocialMente</title>
+        <NextSeo
+          title={editoriale.titolo}
+          description={'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', ')}
+          openGraph={{
+            title: editoriale.titolo,
+            description: 'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', '),
+            url: '/editoriali/' + editoriale.slug,
+            images: editoriale.immagine ? [
+              {
+                url: editoriale.immagine.url,
+                width: editoriale.immagine.width,
+                height: editoriale.immagine.height,
+                alt: 'Immagine - ' + editoriale.titolo,
+                type: editoriale.immagine.mimeType
+              }
+            ] : mainCategory ? [
+              {
+                url: mainCategory.image.url,
+                width: mainCategory.image.width,
+                height: mainCategory.image.height,
+                alt: 'Immagine - ' + editoriale.titolo,
+                type: mainCategory.image.mimeType
+              }
+            ] : []
+          }}
+        />
       </Head>
-      <NextSeo
-        title={editoriale.titolo}
-        description={'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', ')}
-        openGraph={{
-          title: editoriale.titolo,
-          description: 'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', '),
-          url: '/editoriali/' + editoriale.slug,
-          images: editoriale.immagine ? [
-            {
-              url: editoriale.immagine.url,
-              width: editoriale.immagine.width,
-              height: editoriale.immagine.height,
-              alt: 'Immagine - /editoriali/' + editoriale.slug,
-              type: 'image/jpeg' 
-            }
-          ] : []
-        }}
-      />
       <Header />
       <Container>
         <section className="block -mx-5 single-article">

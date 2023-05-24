@@ -25,31 +25,39 @@ interface Data {
 const PostPage: NextPage<Data> = ({ preview, articolo }) => {
   const dt = format(articolo ? new Date(articolo.data) : new Date(), 'dd MMMM yyyy', { locale: it })
   const url = typeof window !== 'undefined' ? window.location.href : articolo ? `/${articolo.categorie[0].slug}/${articolo.slug}` : ''
+  const mainImage = articolo.immagine ?? articolo.categorie[0]?.image
 
   return <>
     <Layout preview={!!preview}>
       <Head>
-        <title>SocialMente</title>
+        <title>{articolo.titolo}</title>
+        <meta name="description" content={articolo.sommario ?? articolo.titolo} />
+        {articolo && <NextSeo
+          title={articolo.titolo}
+          description={articolo.sommario}
+          openGraph={{
+            url,
+            title: articolo.titolo,
+            description: articolo.sommario,
+            siteName: 'SocialMente',
+            type: 'article',
+            article: {
+              publishedTime: articolo.data,
+              authors: articolo.autori.map(au => au.nome)
+            },
+            images: mainImage ? [
+              {
+                url: mainImage.url,
+                width: mainImage.width,
+                height: mainImage.height,
+                alt: articolo.titolo,
+                type: mainImage.mimeType
+              }
+            ] : []
+          }}
+        />}
       </Head>
       <Header />
-      {articolo && <NextSeo
-        title={articolo.titolo}
-        description={articolo.sommario}
-        openGraph={{
-          url,
-          title: articolo.titolo,
-          description: articolo.sommario,
-          images: [
-            {
-              url: articolo.immagine?.url ?? articolo.categorie[0].image.url ?? '',
-              width: articolo.immagine?.width ?? articolo.categorie[0].image.width ?? 1600,
-              height: articolo.immagine?.height ?? articolo.categorie[0].image.height ?? 900,
-              alt: articolo.titolo,
-              type: "image/jpeg"
-            }
-          ]
-        }}
-      />}
       <Container>
         <section className="block -mx-5 single-article">
           {articolo && (
@@ -95,7 +103,7 @@ const PostPage: NextPage<Data> = ({ preview, articolo }) => {
                       </div>
                     )}
                     <div className='mb-16'>
-                      <Share shareUrl={url} media={articolo.immagine.url} />
+                      <Share shareUrl={url} media={articolo.immagine?.url ?? ''} />
                     </div>
                   </div>
                 </div>

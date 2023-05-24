@@ -3,7 +3,7 @@ import type { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from "next/image"
-import { getArticoliByCategory, getMenu } from '@/lib/api'
+import { getArticoliByCategory, getCategories, getMenu } from '@/lib/api'
 import Layout from '@/components/layout'
 import Header from '@/components/header'
 import Container from '@/components/container'
@@ -15,6 +15,7 @@ import { Articolo, Category, Editoriale, Post } from 'models'
 import { GraphCMSImageLoader } from '@/helpers/utils'
 import styled from 'styled-components'
 import { FaChevronRight } from 'react-icons/fa'
+import { NextSeo } from 'next-seo'
 
 type PageData = {
   editoriali: Array<Pick<Editoriale, 'titolo' | 'slug' | 'data' | 'contenuto' | 'immagine' | 'categorie'>>,
@@ -44,12 +45,34 @@ const HomePost: NextPage<Data> = ({ preview, data }) => {
   }
   const baseUrl = (data.categoria?.treename ?? data.categoria?.slug ?? '').replace(';', '/').toLowerCase()
   const date = format(new Date(), 'dd MMMM yyyy', { locale: it })
+  const mainCategory = data.categoria;
+  const mainImage = data.categoria?.image;
 
   return (
     <>
       <Layout preview={!!preview}>
         <Head>
           <title>SocialMente</title>
+          <NextSeo
+            title={'Articoli - ' + (mainCategory ? mainCategory.nome + ' -' : '') + ' SocialMente'}
+            description={'Lista degli articoli della categoria ' + (mainCategory?.nome ?? '')}
+            openGraph={{
+              url: baseUrl,
+              title: 'Articoli - ' + (mainCategory ? mainCategory.nome + ' -' : '') + ' SocialMente',
+              description: 'Lista degli articoli della categoria ' + (mainCategory?.nome ?? ''),
+              siteName: 'SocialMente',
+              type: 'website',
+              images: mainImage ? [
+                {
+                  url: mainImage.url,
+                  width: mainImage.width,
+                  height: mainImage.height,
+                  alt: 'Immagine - ' + (mainCategory?.nome ?? ''),
+                  type: mainImage.mimeType
+                }
+              ] : []
+            }}
+          />
         </Head>
         <Header />
         <Container>

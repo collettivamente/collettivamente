@@ -242,7 +242,7 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette, grida
                     </Link>
                   </div>
                   <Share shareUrl={`/${seconda_apertura.categorie[0].slug}/${seconda_apertura.slug}`}
-                    media={seconda_apertura.immagine.url} />
+                    media={seconda_apertura.immagine?.url ?? ''} />
                 </div>
               </div>
             )}
@@ -274,25 +274,25 @@ const Home: NextPage<Data> = ({ preview, data }) => {
       <Layout preview={false}>
         <Head>
           <title>SocialMente</title>
+          <NextSeo
+            title="SocialMente"
+            description="Blog SocialMente. Uno scambio di opinioni"
+            openGraph={{
+              url,
+              title: "SocialMente",
+              description: "Blog SocialMente. Uno scambio di opinioni",
+              images: [
+                {
+                  url: imageUrl,
+                  width: 400,
+                  height: 98,
+                  alt: "Socialmente",
+                  type: "image/jpeg"
+                }
+              ]
+            }}
+          />
         </Head>
-        <NextSeo
-          title="SocialMente"
-          description="Blog SocialMente. Uno scambio di opinioni"
-          openGraph={{
-            url,
-            title: "SocialMente",
-            description: "Blog SocialMente. Uno scambio di opinioni",
-            images: [
-              {
-                url: imageUrl,
-                width: 400,
-                height: 98,
-                alt: "Socialmente",
-                type: "image/jpeg"
-              }
-            ]
-          }}
-        />
         <Header />
         <Container>
           <Welcome apertura={data.apertura} />

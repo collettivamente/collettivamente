@@ -15,6 +15,7 @@ import { Articolo, Category, Editoriale, Post } from 'models'
 import { GraphCMSImageLoader } from '@/helpers/utils'
 import styled from 'styled-components'
 import { FaChevronRight } from 'react-icons/fa'
+import { NextSeo } from 'next-seo'
 
 type PageData = {
   editoriali: Array<Pick<Editoriale, 'titolo' | 'slug' | 'data' | 'contenuto' | 'immagine' | 'categorie'>>,
@@ -41,12 +42,31 @@ const getImage = (post: Pick<Articolo, 'immagine'>, alt: string) => {
 const HomeEditoriali: NextPage<Data> = ({ preview, data }) => {
   const baseUrl = (data.categoria.treename ?? data.categoria.slug).replace(';', '/').toLowerCase()
   const date = format(new Date(), 'dd MMMM yyyy', { locale: it })
+  const mainImage = data.categoria.image;
 
   return (
     <>
       <Layout preview={!!preview}>
         <Head>
           <title>SocialMente</title>
+          <NextSeo
+            title={'SocialMente - Editoriali'}
+            description={'Lista degli editoriali del blog SocialMente'}
+            openGraph={{
+              title: 'SocialMente - Editoriali',
+              description: 'Lista degli editoriali del blog SocialMente',
+              url: baseUrl,
+              images: mainImage ? [
+                {
+                  url: mainImage.url,
+                  width: mainImage.width,
+                  height: mainImage.height,
+                  alt: 'Immagine - Editoriali - SocialMente',
+                  type: mainImage.mimeType 
+                }
+              ] : []
+            }}
+          />
         </Head>
         <Header />
         <Container>
