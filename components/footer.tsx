@@ -12,13 +12,13 @@ const Footer: React.FC = () => (
         </h3>
         <div className="flex flex-col items-center justify-center lg:flex-row lg:pl-4 lg:w-1/2">
           <a
-            href="https://www.facebook.com/Collettivamente-101060368918324" target="_blank" rel="noreferrer"
+            href="https://www.facebook.com/socialmenteblog" target="_blank" rel="noreferrer"
             className="px-12 py-3 mx-3 mb-6 font-bold transition-colors duration-200 hover:bg-white hover:text-black lg:px-8 lg:mb-0"
           >
             <FaFacebookF />
           </a>
           <a
-            href="https://twitter.com/_collettivamente" target="_blank" rel="noreferrer"
+            href="https://twitter.com/SocialMenteBlog" target="_blank" rel="noreferrer"
             className="px-12 py-3 mx-3 mb-6 font-bold transition-colors duration-200 hover:bg-white hover:text-black lg:px-8 lg:mb-0"
           >
             <FaTwitter />
@@ -28,7 +28,7 @@ const Footer: React.FC = () => (
     </Container>
     <div className='p-6 text-center'>
       <span className='text-neutral-400'>© 2023 Copyright</span>&emsp;
-      <Link href='/' className='font-semibold text-neutral-200'>SocialMente</Link>
+      <Link href='/' className='font-semibold text-neutral-200'>SocialMente Blog</Link>
     </div>
   </footer>
 )
