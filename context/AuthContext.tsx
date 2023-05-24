@@ -17,7 +17,6 @@ export const useAuth = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser>({ email: null, uid: null })
-  const [loading, setLoading] = useState<boolean>(true)
 
   const converter: FirestoreDataConverter<UserProfile> = useMemo(() => ({
     fromFirestore: (snapshot, options) => {
@@ -64,7 +63,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setUser({ email: null, uid: null })
       }
     })
-    setLoading(false)
 
     return () => unsubscribe()
   }, [converter])
@@ -113,7 +111,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ user, signUp, logIn, logOut, getError }}>
-      { loading ? null : children }
+      { children }
     </AuthContext.Provider>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import Image from "next/image"
-import { getArticoliId, getArticolo, getCategories, getEditoriale, getEditorialiId } from '@/lib/api'
+import { getEditoriale, getEditorialiId } from '@/lib/api'
 import Layout from '@/components/layout'
 import Header from '@/components/header'
 import Container from '@/components/container'
@@ -18,12 +18,12 @@ import { NextSeo } from 'next-seo'
 
 interface Data {
   preview: boolean | null,
-  editoriale: Editoriale
+  editoriale: Editoriale | null
 }
 
-const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
+const PostPage: NextPage<Data> = ({ preview = null, editoriale = null }) => {
   const dt = format(editoriale ? new Date(editoriale.data) : new Date(), 'dd MMMM yyyy', { locale: it })
-  const mainCategory = editoriale.categorie[0]
+  const mainCategory = editoriale?.categorie[0]
 
   return <>
     <Layout preview={!!preview}>
@@ -80,7 +80,7 @@ const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
         </section>
       </Container>
     </Layout>
-    <NextSeo
+    {editoriale && <NextSeo
       title={editoriale.titolo}
       description={'Editoriale ' + editoriale.titolo + ' di ' + editoriale.autori.map(au => au.nome).join(', ')}
       openGraph={{
@@ -105,7 +105,7 @@ const PostPage: NextPage<Data> = ({ preview, editoriale }) => {
           }
         ] : []
       }}
-    />
+    />}
   </>;
 }
 

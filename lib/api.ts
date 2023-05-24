@@ -23,6 +23,9 @@ export async function getDataForHome<T>() {
       }
       image {
         url
+        width
+        height
+        mimeType
       }
       slug
     }
@@ -35,6 +38,9 @@ export async function getDataForHome<T>() {
       data
       immagine {
         url
+        width
+        height
+        mimeType
       }
       categorie(first: 1) {
         ...categoriaFields
@@ -94,6 +100,9 @@ export async function getLinks() {
         url
         image {
           url
+          width
+          height
+          mimeType
         }
       }
     }
@@ -173,6 +182,9 @@ export async function getArticoliByCategory(category: string, start: number = 0)
         slug
         image {
           url
+          width
+          height
+          mimeType
         }
         articoli(skip: $start, first: 12, orderBy: data_DESC) {
           titolo
@@ -181,6 +193,9 @@ export async function getArticoliByCategory(category: string, start: number = 0)
           sommario
           immagine {
             url
+            width
+            height
+            mimeType
           }
           autori {
             nome
@@ -232,6 +247,7 @@ export async function getArticolo(slug: string) {
           url
           height
           width
+          mimeType
         }
         autori {
           nome
@@ -242,6 +258,7 @@ export async function getArticolo(slug: string) {
             url
             width
             height
+            mimeType
           }
         }
       }

@@ -19,19 +19,19 @@ import Share from '@/components/share'
 
 interface Data {
   preview: boolean | null,
-  articolo: Articolo
+  articolo: Articolo | null
 }
 
-const PostPage: NextPage<Data> = ({ preview, articolo }) => {
+const PostPage: NextPage<Data> = ({ preview = null, articolo = null }) => {
   const dt = format(articolo ? new Date(articolo.data) : new Date(), 'dd MMMM yyyy', { locale: it })
   const url = typeof window !== 'undefined' ? window.location.href : articolo ? `/${articolo.categorie[0].slug}/${articolo.slug}` : ''
-  const mainImage = articolo.immagine ?? articolo.categorie[0]?.image
+  const mainImage = articolo?.immagine ?? articolo?.categorie[0]?.image
 
   return <>
     <Layout preview={!!preview}>
       <Head>
-        <title>{articolo.titolo}</title>
-        <meta name="description" content={articolo.sommario ?? articolo.titolo} />
+        <title>{articolo?.titolo}</title>
+        <meta name="description" content={articolo?.sommario ?? articolo?.titolo} />
       </Head>
       <Header />
       <Container>

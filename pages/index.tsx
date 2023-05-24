@@ -267,7 +267,7 @@ const Home: NextPage<Data> = ({ preview, data }) => {
   }, [])
 
   const url = typeof window !== 'undefined' ? new URL('/', window.location.origin).toString() : '/'
-  const imageUrl = typeof window !== 'undefined' ? new URL('/images/collettivamente.jpg', window.location.origin).toString() : '/collettivamente.jpg';
+  const imageUrl = typeof window !== 'undefined' ? new URL('/images/socialmente.png', window.location.origin).toString() : '/images/socialmente.png';
 
   return (
     <>
@@ -294,7 +294,7 @@ const Home: NextPage<Data> = ({ preview, data }) => {
               width: 400,
               height: 98,
               alt: "Socialmente",
-              type: "image/jpeg"
+              type: "image/png"
             }
           ]
         }}
