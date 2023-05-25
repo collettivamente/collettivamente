@@ -1,4 +1,4 @@
-import { FacebookIcon, FacebookShareButton, FacebookShareCount, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, TwitterIcon, TwitterShareButton } from "react-share"
+import { FacebookIcon, FacebookShareButton, FacebookShareCount, TwitterIcon, TwitterShareButton } from "react-share"
 
 
 export default function Share({ shareUrl, media }: { shareUrl: string, media: string }) {
@@ -6,12 +6,6 @@ export default function Share({ shareUrl, media }: { shareUrl: string, media: st
   
   return (
     <div className="text-gray-300 share">
-      <PinterestShareButton media={media} url={url}>
-        <PinterestIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
-      </PinterestShareButton>
-      <LinkedinShareButton url={url}>
-        <LinkedinIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
-      </LinkedinShareButton>
       <FacebookShareButton url={url}>
         <FacebookIcon round size="2em" bgStyle={{ fill: 'transparent' }} iconFillColor="currentColor" />
       </FacebookShareButton>
