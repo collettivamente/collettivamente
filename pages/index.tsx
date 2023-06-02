@@ -229,7 +229,7 @@ function MainContentWrapper({fondo, seconda_apertura, contornati, civette, grida
                 <h2 className="mb-4 font-serif text-6xl font-normal">{seconda_apertura.titolo}</h2>
                 <p className="block mb-0 text-lg italic font-light leading-5 text-gray-500">{data_sec}</p>
                 <div className="relative my-12 thumbnail h-[420px]">
-                  {getImage(fondo, `Immagine - ${seconda_apertura.titolo}`, 300, 200)}
+                  {getImage(seconda_apertura, `Immagine - ${seconda_apertura.titolo}`, 300, 200)}
                 </div>
                 <div className="text-lg font-light leading-6 text-gray-700 line-clamp-5">
                   <p>{seconda_apertura.sommario}</p>
